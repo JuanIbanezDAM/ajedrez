@@ -1,0 +1,87 @@
+/* Variables */
+:root {
+    --primary-black: #2c2b29;
+    --secondary-black: #4b4847;
+
+    --primary-white: #fbf5de;
+    --second-white: #dbbe75;
+
+    --primary-green: #769656;
+    --second-green: #baca44;
+}
+
+/* Resets */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Estilos generales */
+header {
+    background-color: var(--primary-green);
+    height: 15vh;
+}
+
+main {
+    height: 70vh;
+}
+
+footer {
+    background-color: var(--primary-green);
+    height: 15vh;
+}
+
+
+/* Estilos especificos*/
+
+/* header */
+/* main */
+.main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tablero-container {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    border: 2px solid #333;
+
+    width: fit-content;
+}
+
+.celda {
+    width: 50px;
+    height: 50px;
+}
+
+.celda.black {
+    background-color: var(--second-white);
+}
+
+.celda.white {
+    background-color: var(--primary-white);
+}
+
+.pieza {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+/* footer */
