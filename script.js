@@ -1,5 +1,6 @@
 import Tablero from './js/Tablero.js';
 import Jugador from './js/Jugador.js';
+import Juego from './js/Juego.js';
 
 import Torre from './js/clases/Torre.js';
 import Caballo from './js/clases/Caballo.js';
@@ -8,26 +9,27 @@ import Reina from './js/clases/Reina.js';
 import Rey from './js/clases/Rey.js';
 import Peon from './js/clases/Peon.js';
 
-// Crear un tablero
-let tablero = new Tablero();
 
-// Crear un peón blanco
-let jugadador1 = new Jugador("Juan", "negro");
-let jugadador2 = new Jugador("Luisa", "blanco");
+// Crear los jugadores
+const jugador1 = new Jugador("Jugador 1", "blanco");
+const jugador2 = new Jugador("Jugador 2", "negro");
 
-//jugadador1.crearPiezas();
-//jugadador2.crearPiezas();
+// Crear el juego
+const juego = new Juego(jugador1, jugador2);
 
+// Crear el tablero y asociarlo al juego
+const tablero = new Tablero(juego);
+juego.tablero = tablero;
+
+// Inicializar el juego
+juego.iniciar();
 //Prueba de fichas sueltas para ver si estan todas ok
 
 
-// Colocar el peón en el tablero (en la posición [1, 1])
 
-
-// Mostrar el tablero con el peón
-tablero.mostrarTablero();
-
-
+ 
+/* 
+// Clases pieza para podr instanciar clses alatorias
 const clasesPiezas = {
     Rey: Rey,
     Reina: Reina,
@@ -37,7 +39,7 @@ const clasesPiezas = {
     Torre: Torre
 };
 
-//Movimineots aleatorios carga
+//Movimineots aleatorios
 function moverPieza() {
     const arrPiezas = ["Rey", "Reina", "Peon", "Alfil", "Caballo", "Torre"];
     const arrColores = ["negro", "blanco"];
@@ -48,14 +50,14 @@ function moverPieza() {
     const tipo = Math.floor(Math.random() * arrPiezas.length);
     const color = arrColores[Math.floor(Math.random() * arrColores.length)];
 
-    // Crear la pieza dinámicamente
+    // Crear la pieza dinamicamente
     const ClasePieza = clasesPiezas[arrPiezas[tipo]];
     const piezaPrueba = new ClasePieza(color, { row: fila, column: columna });
 
     tablero.colocarPieza(piezaPrueba, piezaPrueba.position);
     tablero.mostrarTablero();
 
-    // Eliminar la pieza después de 2 segundos
+    // Eliminar la pieza despues de 2 segundos
     setTimeout(() => {
         tablero.eliminarPieza(piezaPrueba, piezaPrueba.position);
         tablero.mostrarTablero();
@@ -65,7 +67,9 @@ function moverPieza() {
 }
 
 // Iniciar el bucle infinito
-moverPieza();
+moverPieza(); 
+ */
+
 
 
 

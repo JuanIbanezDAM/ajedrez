@@ -45,12 +45,18 @@ footer {
 
 /* header */
 /* main */
-.main-container{
+.main-container {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1em;
+}
+
+.info-partida,
+.info-jugador {
+    width: 400px;
 }
 
 #tablero-container {
@@ -73,6 +79,11 @@ footer {
 
 .celda.white {
     background-color: var(--primary-white);
+}
+
+.celda.seleccionada {
+    outline: 3px solid var(--second-green);
+    z-index: 10;
 }
 
 .pieza {

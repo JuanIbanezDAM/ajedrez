@@ -10,6 +10,15 @@ export default class Reina extends Pieza {
 
     //METODOS
 
+    esMovimientoValido(destino, tablero) {
+        
+        const deltaRow = Math.abs(destino.row - this.position.row);
+        const deltaCol = Math.abs(destino.column - this.position.column);
+
+        // El rey se mueve una casilla en cualquier dirección
+        return deltaRow <= 1 && deltaCol <= 1;
+    }
+
 
     //GETERS Y SETERS
 

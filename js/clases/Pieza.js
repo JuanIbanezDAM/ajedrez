@@ -18,6 +18,13 @@ export default class Pieza {
         this.moves = [];
     }
 
+    //GETERS Y SETERS
+    getImg(color) {
+        const basePath = './assets/piezas/';
+        const fileName = `${this.constructor.name}_${this.color}.svg`; // Ejemplo: "rey_blanco.svg"
+        return `${basePath}${fileName}`;
+    }
+
     //METODOS
     //Devolver la letra correspondiente a la columna del tablero
     columnToLetter() {
@@ -29,14 +36,11 @@ export default class Pieza {
     }
 
     move() {
-        this.moves = this.moves.push(this.position);
+        //Guardamar su posicion 
+        this.moves.push(this.position);
     }
 
-    //GETERS Y SETERS
+    esMovimientoValido(){
 
-    getImg(color) {
-        const basePath = './assets/piezas/';
-        const fileName = `${this.constructor.name}_${this.color}.svg`; // Ejemplo: "rey_blanco.svg"
-        return `${basePath}${fileName}`;
     }
 }
