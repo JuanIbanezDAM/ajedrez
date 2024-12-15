@@ -1,11 +1,11 @@
 export default class Pieza {
     //ATRIBUTOS
     /* 
-    color
-    position {row, column}
-    onGame
-    img
-    moves [position]
+    color   : String
+    position : Object {row, column}
+    onGame  : boolean
+    img     : String
+    moves : Object[position{row, column}]
     */
     static arrLetters = ["A", "B", "C", "D", "E", "F", "G", "H"]; // Atributo estatico, pertenece a la clase
 
@@ -35,12 +35,14 @@ export default class Pieza {
         return `${this.constructor.name} (${this.color}) en ${this.position.row}${this.columnToLetter()} img ${this.img}`;
     }
 
+    // Funcion que al mover un apieza almacena sus posiciones a lo largo del juego
     move() {
         //Guardamar su posicion 
         this.moves.push(this.position);
     }
 
-    esMovimientoValido(){
+    // Funcion para valdiar movimientos validos, cada pieza tiene sus reglas
+    esMovimientoValido() {
 
     }
 }

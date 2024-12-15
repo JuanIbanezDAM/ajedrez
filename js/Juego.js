@@ -1,5 +1,14 @@
 
 export default class Juego {
+    //ATRIBUTO
+    /*     
+    jugador1    : Jugador
+    jugador2    : Jugador
+    tablero     : Tablero
+    turno       : Jugador
+    */
+
+    //CONSTRUCTOR
     constructor(jugador1, jugador2, tablero) {
         this.jugador1 = jugador1;
         this.jugador2 = jugador2;
@@ -7,8 +16,12 @@ export default class Juego {
         this.turno = jugador1; // El jugador 1 comienza
     }
 
+    //GETERS Y SETERS
+
+    //METODOS
+    // Crear y colocar las piezas iniciales de ambos jugadores en el tablero
     iniciar() {
-        // Colocar las piezas iniciales de ambos jugadores en el tablero
+
         this.jugador1.crearPiezas();
         this.jugador2.crearPiezas();
 
@@ -19,6 +32,7 @@ export default class Juego {
         this.tablero.mostrarTablero();
     }
 
+    // Funcion para manejar y validar los click
     manejarClickEnCelda(row, column) {
         const piezaEnCelda = this.tablero.tablero[row][column];
 
@@ -51,14 +65,10 @@ export default class Juego {
 
         this.tablero.mostrarTablero();
     }
-
-
+    // Funcion para cambiar el turno
     cambiarTurno() {
         this.turno = this.turno === this.jugador1 ? this.jugador2 : this.jugador1;
-        console.log(`Turno de: ${this.turno.nombre}`);
         document.getElementById('resultado-turno').innerHTML = `Turno de ${this.turno.color}: ${this.turno.nombre}`;
-
+        console.log(`Turno de: ${this.turno.nombre}`);
     }
-
-
 }
