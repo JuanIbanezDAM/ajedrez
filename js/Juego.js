@@ -32,43 +32,59 @@ export default class Juego {
         this.tablero.mostrarTablero();
     }
 
-    // Funcion para manejar y validar los click
-    manejarClickEnCelda(row, column) {
-        const piezaEnCelda = this.tablero.tablero[row][column];
-
-        if (piezaEnCelda) {
-            if (piezaEnCelda.color !== this.turno.color) {
-                console.log("No puedes mover una pieza del oponente.");
-                return false;
-            }
-
-            console.log(`Seleccionaste la pieza: ${piezaEnCelda.constructor.name}`);
-            this.tablero.selectedPiece = piezaEnCelda;
-        } else if (this.tablero.selectedPiece) {
-            const destino = { row, column };
-            const pieza = this.tablero.selectedPiece;
-
-            // Validar movimiento antes de mover
-            if (!pieza.esMovimientoValido(destino, this.tablero.tablero)) {
-                console.log("Movimiento inválido según las reglas de esta pieza.");
-                return false;
-            }
-
-            // Si el movimiento es válido, mover la pieza
-            this.tablero.moverPieza(pieza, destino);
-            console.log(`Pieza movida a: ${row}, ${column}`);
-            this.cambiarTurno(); // Cambiar turno solo si el movimiento fue válido
-            this.tablero.selectedPiece = null;
-        } else {
-            console.log("No hay pieza seleccionada.");
-        }
-
-        this.tablero.mostrarTablero();
-    }
     // Funcion para cambiar el turno
     cambiarTurno() {
         this.turno = this.turno === this.jugador1 ? this.jugador2 : this.jugador1;
-        document.getElementById('resultado-turno').innerHTML = `Turno de ${this.turno.color}: ${this.turno.nombre}`;
         console.log(`Turno de: ${this.turno.nombre}`);
+        //document.getElementById('resultado-turno').innerHTML = `Turno de ${this.turno.color}: ${this.turno.nombre}`;
+
+    }
+
+    // Funcion para manejar y validar los click
+    manejarClickEnCelda(row, column) {
+        const destino = { row, column };
+        const piezaEnCelda = this.tablero.tablero[row][column];
+
+        if (this.tablero.selectedPiece) {
+            this._procesarMovimiento(piezaEnCelda, destino);
+        } else if (piezaEnCelda && piezaEnCelda.color === this.turno.color) {
+            this._seleccionarPieza(piezaEnCelda, row, column);
+        } else {
+            console.log("Selecciona una pieza válida.");
+        }
+
+        this.tablero.mostrarTablero(); // Actualizar visualizacion
+    }
+
+    // Funcion para selecionar una pieza del tablero de juego
+    _seleccionarPieza(pieza, row, column) {
+        console.log(`Seleccionaste la pieza: ${pieza.constructor.name} en ${row}, ${column}`);
+        this.tablero.selectedPiece = pieza;
+    }
+
+    // Funcion para comer o comer una pieza del tablero de juego
+    _procesarMovimiento(piezaEnCelda, destino) {
+        const origen = this.tablero.selectedPiece.position;
+
+        // Comer una pieza enemiga
+        if (piezaEnCelda && piezaEnCelda.color !== this.turno.color) {
+            if (this.tablero.comerPieza(origen, destino)) {
+                console.log(`Pieza comida: ${piezaEnCelda.constructor.name}`);
+                this.cambiarTurno();
+            } else {
+                console.log("No se pudo comer la pieza.");
+            }
+        }
+        // Mover la pieza finalmente al destino
+        else if (!piezaEnCelda) {
+            if (this.tablero.moverPieza(this.tablero.selectedPiece, destino)) {
+                console.log(`Pieza movida a: ${destino.row}, ${destino.column}`);
+                this.cambiarTurno();
+            } else {
+                console.log("Movimiento inválido.");
+            }
+        }
+
+        this.tablero.selectedPiece = null; // Deselecionar la pieza
     }
 }

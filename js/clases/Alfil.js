@@ -9,44 +9,23 @@ export default class Alfil extends Pieza {
     }
 
     //METODOS
+    // Funcion para valdiar movimientos validos del alfil
     esMovimientoValido(destino, tablero) {
         const filaActual = this.position.row;
         const columnaActual = this.position.column;
 
-        // Movimiento diagonal: |filaDestino - filaActual| === |columnaDestino - columnaActual|
-        const diferenciaFila = Math.abs(destino.row - filaActual);
-        const diferenciaColumna = Math.abs(destino.column - columnaActual);
-
-        if (diferenciaFila === diferenciaColumna) {
-            // Determinar la dirección del movimiento
-            const pasoFila = destino.row > filaActual ? 1 : -1;
-            const pasoColumna = destino.column > columnaActual ? 1 : -1;
-
-            let fila = filaActual + pasoFila;
-            let columna = columnaActual + pasoColumna;
-
-            // Verificar que no haya piezas entre origen y destino
-            while (fila !== destino.row && columna !== destino.column) {
-                if (tablero[fila][columna]) {
-                    // Hay una pieza bloqueando el camino
-                    return false;
-                }
-                fila += pasoFila;
-                columna += pasoColumna;
-            }
-
-            // Verificar si el destino está vacío o tiene una pieza enemiga
-            const piezaDestino = tablero[destino.row][destino.column];
-            if (!piezaDestino || piezaDestino.color !== this.color) {
-                return true;
+        // Verificar si el movimiento es diagonal
+        if (Math.abs(destino.row - filaActual) === Math.abs(destino.column - columnaActual)) {
+            // Usar el método esCaminoLibre para validar el camino
+            if (this.esCaminoLibre(destino, tablero)) {
+                const piezaDestino = tablero[destino.row][destino.column];
+                // Verificar si el destino está vacío o tiene una pieza enemiga
+                return !piezaDestino || piezaDestino.color !== this.color;
             }
         }
 
-        return false; // Si no es un movimiento válido, retorna false
+        return false; // Movimiento no válido
     }
-
-
-
     //GETERS Y SETERS
 
 }

@@ -45,4 +45,41 @@ export default class Pieza {
     esMovimientoValido() {
 
     }
+
+    // Funcion para valdiar caminos libres, usado por el alfil, torre y reina
+    esCaminoLibre(destino, tablero) {
+        const pasoFila = destino.row === this.position.row ? 0 : (destino.row > this.position.row ? 1 : -1);
+        const pasoColumna = destino.column === this.position.column ? 0 : (destino.column > this.position.column ? 1 : -1);
+
+        let fila = this.position.row + pasoFila;
+        let columna = this.position.column + pasoColumna;
+
+        while (fila !== destino.row || columna !== destino.column) {
+            if (tablero[fila][columna]) {
+                return false;
+            }
+            fila += pasoFila;
+            columna += pasoColumna;
+        }
+
+        return true;
+    }
+
+
+    // Funcion para comer una pieza
+    comerPieza(destino, tablero) {
+        const piezaDestino = tablero[destino.row][destino.column];
+
+        // Verificar si el destino tiene una pieza enemiga
+        if (piezaDestino && piezaDestino.color !== this.color) {
+            // Validar si el movimiento es valido para esta pieza
+            if (this.esMovimientoValido(destino, tablero)) {
+                tablero[destino.row][destino.column] = null; // Eliminar la pieza enemiga del tablero
+                this.position = destino; // Actualizar la posición de la pieza actual
+                return true; // La captura fue exitosa
+            }
+        }
+        return false; // Captura no válida
+    }
+
 }

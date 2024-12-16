@@ -86,6 +86,12 @@ export default class Tablero {
             return false;
         }
 
+        // Validar movimiento antes de mover
+        if (!pieza.esMovimientoValido(destino, this.tablero)) {
+            console.log("Movimiento inválido según las reglas de esta pieza.");
+            return false;
+        }
+
         // Mover la pieza
         this.eliminarPieza(pieza, pieza.position); // Eliminar de la posición actual
         this.colocarPieza(pieza, destino); // Colocar en el nuevo destino
@@ -93,15 +99,17 @@ export default class Tablero {
         return true;
     }
 
-    // TODO Funcion para valdiar movimientos validos globales del tablero como pueda ser el movimiento que pone al rey en jaque
-    esMovimientoPermitido(pieza, destino) {
-        if (!pieza.esMovimientoValido(destino, this.tablero)) {
-            return false;
+    // Funcion para gestionar los cambios en el tablero al comer piezas
+    comerPieza(origen, destino) {
+        const piezaOrigen = this.tablero[origen.row][origen.column];
+        const piezaDestino = this.tablero[destino.row][destino.column];
+
+        if (piezaOrigen && piezaOrigen.comerPieza(destino, this.tablero)) {
+            this.tablero[origen.row][origen.column] = null; // Vaciar la celda de origen
+            this.tablero[destino.row][destino.column] = piezaOrigen; // Mover la pieza al destino
+            return true;
         }
-
-        // Validar otras condiciones globales, como si el movimiento pone al rey en jaque
-        return true;
+        return false;
     }
-
 
 }

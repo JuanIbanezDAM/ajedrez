@@ -9,7 +9,7 @@ export default class Rey extends Pieza {
     }
 
     //METODOS
-
+    // Funcion para valdiar movimientos validos del rey
     esMovimientoValido(destino, tablero) {
 
         const diferenciaFila = Math.abs(destino.row - this.position.row);
@@ -18,7 +18,6 @@ export default class Rey extends Pieza {
         // El rey se mueve una casilla en cualquier dirección
         return diferenciaFila <= 1 && diferenciaColumna <= 1;
     }
-
 
     //GETERS Y SETERS
 

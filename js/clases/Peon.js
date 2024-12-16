@@ -15,7 +15,7 @@ export default class Peon extends Pieza {
     //GETERS Y SETERS
 
     //METODOS
-    // Funcion para valdiar movimientos validos
+    // Funcion para valdiar movimientos validos del peon
     esMovimientoValido(destino, tablero) {
         const direccion = this.color === "blanco" ? -1 : 1; // Direccion que puede tomar segun el color
         const filaActual = this.position.row;
@@ -38,6 +38,17 @@ export default class Peon extends Pieza {
                 !tablero[(filaActual + direccion)][columnaActual] && // Celda intermedia vacia
                 !tablero[destino.row][destino.column] // Celda de destino vacia
             ) {
+                return true;
+            }
+        }
+
+        //Movimiento para comer en diagonal
+        if (
+            Math.abs(destino.column - columnaActual) === 1 &&
+            destino.row === filaActual + direccion
+        ) {
+            const piezaDestino = tablero[destino.row][destino.column];
+            if (piezaDestino && piezaDestino.color !== this.color) {
                 return true;
             }
         }
