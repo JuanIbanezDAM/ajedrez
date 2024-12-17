@@ -14,9 +14,10 @@ export default class Jugador {
     */
 
     //CONSTRUCTOR
-    constructor(nombre, color) {
+    constructor(nombre, color, avatar) {
         this.nombre = nombre;
         this.color = color
+        this.avatar = avatar;
         this.piezas = [];
         this.crearPiezas();
     }

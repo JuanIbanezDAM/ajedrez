@@ -28,6 +28,9 @@ export default class Juego {
         this.tablero.colocarPiezas(this.jugador1.piezas);
         this.tablero.colocarPiezas(this.jugador2.piezas);
 
+        this._mostrarJugador(this.jugador1, "jugador-blanco");
+        this._mostrarJugador(this.jugador2, "jugador-negro");
+
         // Mostrar el tablero inicial
         this.tablero.mostrarTablero();
     }
@@ -64,27 +67,65 @@ export default class Juego {
 
     // Funcion para comer o comer una pieza del tablero de juego
     _procesarMovimiento(piezaEnCelda, destino) {
-        const origen = this.tablero.selectedPiece.position;
 
         // Comer una pieza enemiga
+
         if (piezaEnCelda && piezaEnCelda.color !== this.turno.color) {
-            if (this.tablero.comerPieza(origen, destino)) {
-                console.log(`Pieza comida: ${piezaEnCelda.constructor.name}`);
-                this.cambiarTurno();
-            } else {
-                console.log("No se pudo comer la pieza.");
-            }
+            this._comerPieza(piezaEnCelda, destino);
+        } else if (!piezaEnCelda) {
+            this._moverPieza(destino);
         }
-        // Mover la pieza finalmente al destino
-        else if (!piezaEnCelda) {
-            if (this.tablero.moverPieza(this.tablero.selectedPiece, destino)) {
-                console.log(`Pieza movida a: ${destino.row}, ${destino.column}`);
-                this.cambiarTurno();
-            } else {
-                console.log("Movimiento inválido.");
+        this.tablero.selectedPiece = null; // Deselecionar la pieza
+
+    }
+
+    _comerPieza(piezaEnCelda, destino) {
+        const origen = this.tablero.selectedPiece.position;
+
+        if (this.tablero.comerPieza(origen, destino, this.turno)) {
+            console.log(`Pieza comida: ${piezaEnCelda.constructor.name}`);
+
+            // Comprobar si la pieza comida es un Rey
+            if (piezaEnCelda.constructor.name === "Rey") {
+                console.log(`¡El rey de ${piezaEnCelda.color} ha sido capturado!`);
+                console.log(`¡${this.turno.nombre} gana la partida!`);
+                this._terminarJuego(); // Finaliza la partida
+                return; // Salir del método para evitar más acciones
             }
+
+            this.cambiarTurno(); // Cambiar turno solo si no se termina el juego
+        } else {
+            console.log("No se pudo comer la pieza.");
+        }
+    }
+
+    _moverPieza(destino) {
+        if (this.tablero.moverPieza(this.tablero.selectedPiece, destino)) {
+            console.log(`Pieza movida a: ${destino.row}, ${destino.column}`);
+            this.cambiarTurno();
+        } else {
+            console.log("Movimiento inválido.");
         }
 
-        this.tablero.selectedPiece = null; // Deselecionar la pieza
+    }
+
+    _mostrarJugador(jugador, contenedorId) {
+        const contenedor = document.getElementById(contenedorId);
+
+        // Actualizar nombre
+        const nombreElem = contenedor.querySelector(".nombre");
+        nombreElem.textContent = jugador.nombre;
+
+        // Actualizar avatar
+        const avatarElem = contenedor.querySelector(".avatar");
+        avatarElem.src = jugador.avatar;
+        avatarElem.alt = `Avatar de ${jugador.nombre}`;
+    }
+
+    _terminarJuego() {
+        console.log("Fin de la partida.");
+        // Puedes mostrar un mensaje al jugador
+        alert(`¡Fin del juego! ${this.turno.nombre} gana.`);
+        this.tablero.desactivarTablero(); // Opcional: Bloquear el tablero
     }
 }

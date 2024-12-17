@@ -11,8 +11,9 @@ import Peon from './js/clases/Peon.js';
 
 
 // Crear los jugadores
-const jugador1 = new Jugador("Jugador 1", "blanco");
-const jugador2 = new Jugador("Jugador 2", "negro");
+const jugador1 = new Jugador("Alice", "blanco", "./assets/img/avatar-blanco.jpg");
+const jugador2 = new Jugador("Bob", "negro", "./assets/img/avatar-negro.jpg");
+
 
 // Crear el juego
 const juego = new Juego(jugador1, jugador2);

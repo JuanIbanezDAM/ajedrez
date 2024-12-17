@@ -7,22 +7,24 @@ export default class Pieza {
     img     : String
     moves : Object[position{row, column}]
     */
-    static arrLetters = ["A", "B", "C", "D", "E", "F", "G", "H"]; // Atributo estatico, pertenece a la clase
+
+    // ATRIBUTOS estaticos, pertenece a la clase
+    static arrLetters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+    static basePath = './assets/piezas/';
 
     //CONSTRUCTOR
     constructor(color, position) {
         this.color = color;
         this.position = position;
         this.onGame = false;
-        this.img = this.getImg();
+        this.img = this.getImg(color);
         this.moves = [];
     }
 
     //GETERS Y SETERS
     getImg(color) {
-        const basePath = './assets/piezas/';
-        const fileName = `${this.constructor.name}_${this.color}.svg`; // Ejemplo: "rey_blanco.svg"
-        return `${basePath}${fileName}`;
+        const fileName = `${this.constructor.name}_${color}.svg`; // Ejemplo: "rey_blanco.svg"
+        return `${Pieza.basePath}${fileName}`;
     }
 
     //METODOS
@@ -67,7 +69,7 @@ export default class Pieza {
 
 
     // Funcion para comer una pieza
-    comerPieza(destino, tablero) {
+    comerPieza(destino, tablero, jugador) {
         const piezaDestino = tablero[destino.row][destino.column];
 
         // Verificar si el destino tiene una pieza enemiga
@@ -76,10 +78,25 @@ export default class Pieza {
             if (this.esMovimientoValido(destino, tablero)) {
                 tablero[destino.row][destino.column] = null; // Eliminar la pieza enemiga del tablero
                 this.position = destino; // Actualizar la posición de la pieza actual
+                
+                // Añadir la pieza capturada al contenedor correspondiente
+                const contenedorCapturadas = document.getElementById(
+                    jugador.color === "blanco" ? "piezas-negro" : "piezas-blanco"
+                );
+
+                // Crear un elemento visual para la pieza capturada
+                const img = document.createElement("img");
+                img.src = piezaDestino.img; // Usar la ruta de la imagen de la pieza
+                img.alt = `${piezaDestino.constructor.name} (${piezaDestino.color})`;
+                img.classList.add("pieza-capturada"); // Clase para estilo opcional
+
+                // Añadir la imagen al contenedor
+                contenedorCapturadas.appendChild(img);
+
                 return true; // La captura fue exitosa
             }
         }
-        return false; // Captura no válida
+        return false; // Captura no valida
     }
 
 }
