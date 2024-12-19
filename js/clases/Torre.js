@@ -25,7 +25,7 @@ export default class Torre extends Pieza {
             }
         }
     
-        return false; // Movimiento no válido
+        return false; // Movimiento no valido
     }
 
 }

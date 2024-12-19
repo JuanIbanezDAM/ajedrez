@@ -31,7 +31,7 @@ export default class Caballo extends Pieza {
                 return true;
             }
         }
-        return false; // Si ninguna condición se cumple, el movimiento no es válido
+        return false; // Si ninguna condicion se cumple, el movimiento no es valido
     }
 
 }

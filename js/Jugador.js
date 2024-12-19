@@ -8,9 +8,9 @@ import Peon from './clases/Peon.js';
 export default class Jugador {
     //ATRIBUTOS
     /* 
-    nombre
-    color
-    piezas []
+    nombre  : String
+    color   : String
+    piezas  :Piezas[]
     */
 
     //CONSTRUCTOR

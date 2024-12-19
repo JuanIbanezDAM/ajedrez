@@ -39,8 +39,6 @@ export default class Juego {
     cambiarTurno() {
         this.turno = this.turno === this.jugador1 ? this.jugador2 : this.jugador1;
         console.log(`Turno de: ${this.turno.nombre}`);
-        //document.getElementById('resultado-turno').innerHTML = `Turno de ${this.turno.color}: ${this.turno.nombre}`;
-
     }
 
     // Funcion para manejar y validar los click
@@ -65,7 +63,6 @@ export default class Juego {
         this.tablero.selectedPiece = pieza;
     }
 
-    // Funcion para comer o comer una pieza del tablero de juego
     _procesarMovimiento(piezaEnCelda, destino) {
 
         // Comer una pieza enemiga
@@ -90,7 +87,7 @@ export default class Juego {
                 console.log(`¡El rey de ${piezaEnCelda.color} ha sido capturado!`);
                 console.log(`¡${this.turno.nombre} gana la partida!`);
                 this._terminarJuego(); // Finaliza la partida
-                return; // Salir del método para evitar más acciones
+                return; // Salir del método para evitar mas acciones
             }
 
             this.cambiarTurno(); // Cambiar turno solo si no se termina el juego
