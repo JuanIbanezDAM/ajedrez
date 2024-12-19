@@ -27,7 +27,7 @@ export default class Reina extends Pieza {
             return !piezaDestino || piezaDestino.color !== this.color;
         }
 
-        return false; // Movimiento no válido
+        return false; // Movimiento no valido
     }
 
     //GETERS Y SETERS

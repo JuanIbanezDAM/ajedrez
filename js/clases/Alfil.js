@@ -24,7 +24,7 @@ export default class Alfil extends Pieza {
             }
         }
 
-        return false; // Movimiento no válido
+        return false; // Movimiento no valido
     }
     //GETERS Y SETERS
 

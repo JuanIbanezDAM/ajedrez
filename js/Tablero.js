@@ -75,7 +75,7 @@ export default class Tablero {
         this.tablero[position.row][position.column] = null;
     }
 
-    // Meidante colocarPieza y eliminarPieza, mueve una pieza del tablero
+    // Mediante colocarPieza y eliminarPieza, mueve una pieza del tablero
     moverPieza(pieza, destino) {
         // Validar que el destino este dentro del tablero
         if (
@@ -100,16 +100,24 @@ export default class Tablero {
     }
 
     // Funcion para gestionar los cambios en el tablero al comer piezas
-    comerPieza(origen, destino) {
+    comerPieza(origen, destino, jugador) {
         const piezaOrigen = this.tablero[origen.row][origen.column];
         const piezaDestino = this.tablero[destino.row][destino.column];
 
-        if (piezaOrigen && piezaOrigen.comerPieza(destino, this.tablero)) {
+        if (piezaOrigen && piezaOrigen.comerPieza(destino, this.tablero, jugador)) {
             this.tablero[origen.row][origen.column] = null; // Vaciar la celda de origen
             this.tablero[destino.row][destino.column] = piezaOrigen; // Mover la pieza al destino
             return true;
         }
         return false;
+    }
+
+    //Provisional
+    //Funcion para desactivar el tablero al acabar el juego con ( pointer-events: none;) en el contenedor del tablero
+    desactivarTablero() {
+        const tableroContainer = document.getElementById('tablero-container');
+        tableroContainer.style.pointerEvents = "none";
+        console.log("Tablero desactivado.");
     }
 
 }
